@@ -3,6 +3,11 @@ import clean from 'gulp-clean';
 import babel from 'gulp-babel';
 import nodemon from 'gulp-nodemon';
 
+import browserify from "browserify";
+import source from "vinyl-source-stream";
+import babelify from 'babelify';
+
+
 gulp.task('default', () => {
 	console.log('Hello World');
 	return;
@@ -14,8 +19,14 @@ gulp.task('clean', () => {
 })
 
 gulp.task('build', ['clean'], () => {
-	return gulp.src('src/app.js')
+	gulp.src('src/app.js')
 		.pipe(babel())
+		.pipe(gulp.dest('build'));
+
+	return browserify('./src/main.js')
+		.transform(babelify)
+		.bundle()
+		.pipe(source('bundle.js'))
 		.pipe(gulp.dest('build'));
 });
 
