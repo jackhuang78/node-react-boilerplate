@@ -17,6 +17,9 @@
   "devDependencies": {
     "babel-core": "^6.17.0",
     "babel-preset-latest": "^6.16.0",
-    "gulp": "^3.9.1"
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-clean": "^0.3.2",
+    "gulp-nodemon": "^2.2.1"
   }
 }
