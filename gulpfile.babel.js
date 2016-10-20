@@ -2,9 +2,11 @@ import gulp from 'gulp';
 import clean from 'gulp-clean';
 import babel from 'gulp-babel';
 import nodemon from 'gulp-nodemon';
+import uglify from 'gulp-uglify';
 
 import browserify from "browserify";
 import source from "vinyl-source-stream";
+import buffer from 'vinyl-buffer';
 import babelify from 'babelify';
 
 
@@ -27,6 +29,8 @@ gulp.task('build', ['clean'], () => {
 		.transform(babelify)
 		.bundle()
 		.pipe(source('bundle.js'))
+		// .pipe(buffer())	// remove for development
+		// .pipe(uglify())
 		.pipe(gulp.dest('build'));
 });
 

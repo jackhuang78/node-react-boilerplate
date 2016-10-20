@@ -1,7 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
-import ejs from 'ejs';
 
 // Express instance
 let app = express();
@@ -17,7 +16,6 @@ app.use(bodyParser.json());
 
 // set view and view engine
 app.set('views', 'src');
-app.engine('html', ejs.renderFile);
 app.set('view engine', 'ejs');
 
 
@@ -26,7 +24,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/hello', (req, res) => {
-	return res.render('helloworld.html');
+	return res.render('main', {title: 'hello', component: 'Hello'});
 })
 
 app.listen(9999);
