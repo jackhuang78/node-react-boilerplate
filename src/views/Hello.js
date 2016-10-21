@@ -12,6 +12,6 @@ class Hello extends React.Component {
 			</Panel>
 		);
 	}
-};
+}
 
 export default Hello;

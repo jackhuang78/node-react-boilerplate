@@ -1,10 +1,11 @@
 import gulp from 'gulp';
 import clean from 'gulp-clean';
+import eslint from 'gulp-eslint';
 import babel from 'gulp-babel';
 import nodemon from 'gulp-nodemon';
 import uglify from 'gulp-uglify';
-import browserify from "browserify";
-import source from "vinyl-source-stream";
+import browserify from 'browserify';
+import source from 'vinyl-source-stream';
 import buffer from 'vinyl-buffer';
 import babelify from 'babelify';
 
@@ -18,11 +19,18 @@ gulp.task('default', () => {
 gulp.task('clean', () => {
 	return gulp.src('build', {read:false})
 		.pipe(clean());
-})
+});
+
+gulp.task('lint', () => {
+	return gulp.src(['src/**/*.js', 'spec/**/*.js', './*.js'])
+		.pipe(eslint())
+		.pipe(eslint.format())
+		.pipe(eslint.failAfterError());
+});
 
 // build codes with babel and react
 // browserify client-side code
-gulp.task('build', ['clean'], () => {
+gulp.task('build', ['clean', 'lint'], () => {
 	gulp.src('src/app.js')
 		.pipe(babel())
 		.pipe(gulp.dest('build'));

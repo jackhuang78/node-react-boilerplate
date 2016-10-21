@@ -21,10 +21,10 @@ app.set('view engine', 'ejs');
 
 app.get('/', (req, res) => {
 	return res.send('Hello World!');
-})
+});
 
 app.get('/hello', (req, res) => {
 	return res.render('main', {title: 'hello', component: 'Hello'});
-})
+});
 
 app.listen(9999);
