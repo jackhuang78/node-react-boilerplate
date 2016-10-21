@@ -1,9 +1,13 @@
-// main.js
-var React = require('react');
+import React from 'react';
+import {Panel, PageHeader} from 'react-bootstrap';
 
 class Hello extends React.Component {
 	render() {
-		return (<h1>Hello world!</h1>);
+		return (
+			<Panel>
+				<PageHeader>Hello world!</PageHeader>
+			</Panel>
+		);
 	}
 }
 
