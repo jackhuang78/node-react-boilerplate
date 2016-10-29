@@ -14,10 +14,14 @@ describe('App', () => {
 			it('Can be started then stopped.', async () => {
 				let app = new App();
 				await app.start(PORT);
-				await app.stop();
-
-				await app.start(PORT);
 				await app.stop();				
+			});
+			it('Can be started and stopped multiple times.', async () => {
+				let app = new App();
+				await app.start(PORT);
+				await app.stop();
+				await app.start(PORT);
+				await app.stop();
 			});
 		});
 
