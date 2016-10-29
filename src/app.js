@@ -25,6 +25,11 @@ class App {
 		this.app.set('views', 'src');
 		this.app.set('view engine', 'ejs');
 
+
+		//==================
+		//	REST API
+		//==================
+
 		this.app.get('/', (req, res) => {
 			return res.send('Hello World!');
 		});
@@ -42,8 +47,12 @@ class App {
 	 */
 	async start(port) {
 		return new Promise((res, rej) => {
-			this.server = this.app.listen(port, () => {
+			let server = this.app.listen(port, () => {
+				this.server = server;
 				return res();
+			})
+			.on('error', (err) => {
+				return rej(err);
 			});
 		});
 	}
@@ -57,7 +66,7 @@ class App {
 	async stop() {
 		return new Promise((res, rej) => {
 			expect(this.server).to.exist;
-			
+
 			this.server.close(() => {
 				this.server = null;
 				return res();

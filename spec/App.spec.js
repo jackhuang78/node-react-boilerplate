@@ -11,15 +11,32 @@ describe('App', () => {
 
 	describe('JS', () => {
 		describe('#start and #stop', () => {
-			it('Can be stopped after started', async () => {
+			it('Can be started then stopped.', async () => {
 				let app = new App();
 				await app.start(PORT);
 				await app.stop();
+
+				await app.start(PORT);
+				await app.stop();				
 			});
 		});
-		
+
+		describe('#start', () => {
+			let app;
+			before(async () => {
+				app = new App();
+				await app.start(PORT);
+			});
+			it('Cannot be start service again before stopping it.', async () => {
+				expect(app.start(PORT)).to.be.rejected;
+			});
+			after(async () => {
+				await app.stop();
+			});
+		});
+
 		describe('#stop', () => {
-			it('Should not be called before #start', async () => {
+			it('Cannot stopped service before starting it.', async () => {
 				expect(new App().stop()).to.be.rejected;
 			});
 		});
@@ -38,7 +55,7 @@ describe('App', () => {
 		});
 
 		describe('GET /', () => {
-			it('should return Hello World', () => {
+			it('Should response with \'Hello World!\'.', () => {
 				get(URL, (err, resp) => {
 					expect(resp.statusCode).to.equal(200);
 					expect(resp.body).to.equal('Hello World!');
