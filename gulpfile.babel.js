@@ -2,6 +2,7 @@ import gulp from 'gulp';
 import clean from 'gulp-clean';
 import eslint from 'gulp-eslint';
 import babel from 'gulp-babel';
+import mocha from 'gulp-mocha';
 import nodemon from 'gulp-nodemon';
 import uglify from 'gulp-uglify';
 import browserify from 'browserify';
@@ -9,6 +10,7 @@ import source from 'vinyl-source-stream';
 import buffer from 'vinyl-buffer';
 import babelify from 'babelify';
 
+//TODO: mocha, jsdoc, logger
 
 gulp.task('default', () => {
 	console.log('Hello World');
@@ -21,8 +23,9 @@ gulp.task('clean', () => {
 		.pipe(clean());
 });
 
+// lint to check for syntax error / coding style
 gulp.task('lint', () => {
-	return gulp.src(['src/**/*.js', 'spec/**/*.js', './*.js'])
+	return gulp.src(['src/**/*.js', 'spec*/**/*.js', './*.js'])
 		.pipe(eslint())
 		.pipe(eslint.format())
 		.pipe(eslint.failAfterError());
@@ -31,7 +34,7 @@ gulp.task('lint', () => {
 // build codes with babel and react
 // browserify client-side code
 gulp.task('build', ['clean', 'lint'], () => {
-	gulp.src('src/app.js')
+	gulp.src('src/**/*.js')
 		.pipe(babel())
 		.pipe(gulp.dest('build'));
 
@@ -44,13 +47,18 @@ gulp.task('build', ['clean', 'lint'], () => {
 		.pipe(gulp.dest('build'));
 });
 
+gulp.task('test', ['lint'], () => {
+	return gulp.src('spec.integration/**/*.spec.js')
+		.pipe(mocha());
+});
+
 // run server
 gulp.task('run', () => {
 	return nodemon({
 		watch: ['build/**/*'],
-		script: 'build/app.js',
+		script: 'build/run.js',
 		env: {PORT: 9999}
 	}).on('restart', () => {
-		console.log('app.js restarted');
+		console.log('app restarted');
 	});
 });
