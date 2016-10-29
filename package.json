@@ -23,6 +23,7 @@
     "react-dom": "^15.3.2"
   },
   "devDependencies": {
+    "apidoc": "^0.16.1",
     "babel-core": "^6.17.0",
     "babel-eslint": "^7.0.0",
     "babel-polyfill": "^6.16.0",
@@ -32,6 +33,8 @@
     "browserify": "^13.1.0",
     "eslint": "^3.8.1",
     "gulp": "^3.9.1",
+    "gulp-api-doc": "^1.1.0",
+    "gulp-apidoc": "^0.2.4",
     "gulp-babel": "^6.1.2",
     "gulp-browserify": "^0.5.1",
     "gulp-clean": "^0.3.2",
@@ -45,5 +48,22 @@
     "sleep": "^4.0.0",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
-  }
+  },
+  "eslintConfig": {
+    "parser": "babel-eslint",
+    "env": {
+      "node": true
+    },
+    "rules": {
+      "quotes": [1, "single"],
+      "semi": [1, "always"],
+      "eol-last": [0],
+      "no-mixed-requires": [0],
+      "no-underscore-dangle": [0]
+    }
+  },
+  "babel": {
+    "presets": ["latest", "react"]
+  },
+  "apidoc": {}
 }

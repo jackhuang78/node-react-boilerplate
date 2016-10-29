@@ -1,8 +1,9 @@
 import chai, {expect,AssertionError} from 'chai';
 import chaiAsPromised from 'chai-as-promised';
-import {get} from 'needle';
+import {get, post, put, delete} from 'needle';
 import App from '../src/App';
 
+// set chai plugins
 chai.use(chaiAsPromised);
 
 describe('App', () => {
@@ -16,6 +17,7 @@ describe('App', () => {
 				await app.start(PORT);
 				await app.stop();				
 			});
+
 			it('Can be started and stopped multiple times.', async () => {
 				let app = new App();
 				await app.start(PORT);
@@ -23,28 +25,20 @@ describe('App', () => {
 				await app.start(PORT);
 				await app.stop();
 			});
-		});
 
-		describe('#start', () => {
-			let app;
-			before(async () => {
-				app = new App();
-				await app.start(PORT);
-			});
 			it('Cannot be start service again before stopping it.', async () => {
+				let app = new App();
+				await app.start(PORT);
 				expect(app.start(PORT)).to.be.rejected;
-			});
-			after(async () => {
 				await app.stop();
 			});
-		});
 
-		describe('#stop', () => {
 			it('Cannot stopped service before starting it.', async () => {
 				expect(new App().stop()).to.be.rejected;
 			});
 		});
 	});
+
 
 	describe('REST', () => {
 		let app;

@@ -2,6 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import {expect} from 'chai';
+import polyfill from 'babel-polyfill';
 
 /**
  * Create an Application. This instance can then be used to start as a service.
@@ -30,6 +31,15 @@ class App {
 		//	REST API
 		//==================
 
+		/**
+		 * @api {get} / Hello World!
+		 * @apiName HelloWorld
+		 * @apiGroup Example
+		 *
+		 * @apiParam {String} name Your name.
+		 *
+		 * @apiSuccess {String} greeting Greeting from the server.
+		 */
 		this.app.get('/', (req, res) => {
 			return res.send('Hello World!');
 		});
