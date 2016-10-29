@@ -1,7 +1,12 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
+import {expect} from 'chai';
 
+/**
+ * Create an Application. This instance can then be used to start as a service.
+ * @class App
+ */
 class App {
 	constructor() {
 		// Express instance
@@ -29,12 +34,37 @@ class App {
 		});		
 	}
 
-	start(port, cb) {
-		this.server = this.app.listen(port, cb);
+	/**
+	 * Start the app as a service.
+	 * @function App#start
+	 * @param  {Number} port The port on which the service should run.
+	 * @return {Promise<null>}     
+	 */
+	async start(port) {
+		return new Promise((res, rej) => {
+			this.server = this.app.listen(port, () => {
+				return res();
+			});
+		});
 	}
 
-	stop() {
-		this.server.close();
+	/**
+	 * Stop the app service.
+	 * @function App#stop
+	 * @return {Promise<null>}     
+	 * @throws {AssertionError} Service has not started yet. {@link App#start} must be called first.
+	 */
+	async stop() {
+		return new Promise((res, rej) => {
+			expect(this.server).to.exist;
+			
+			this.server.close(() => {
+				this.server = null;
+				return res();
+			});
+		});
+		
+		
 	}
 }
 

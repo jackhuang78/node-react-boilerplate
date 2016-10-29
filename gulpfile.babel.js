@@ -1,16 +1,23 @@
+//==============================
+//	Import required modules
+//==============================
+// the test driver
 import gulp from 'gulp';
+// transpiler for using es7 and react
+import babel from 'gulp-babel';
+import polyfill from 'babel-polyfill'; // to avoid 'ReferenceError: regeneratorRuntime is not defined' error
 import clean from 'gulp-clean';
 import eslint from 'gulp-eslint';
-import babel from 'gulp-babel';
-import mocha from 'gulp-mocha';
 import nodemon from 'gulp-nodemon';
 import uglify from 'gulp-uglify';
 import browserify from 'browserify';
 import source from 'vinyl-source-stream';
 import buffer from 'vinyl-buffer';
 import babelify from 'babelify';
+import mocha from 'gulp-mocha';
+import jsdoc from 'gulp-jsdoc';
 
-//TODO: mocha, jsdoc, logger
+//TODO: jsdoc, logger
 
 gulp.task('default', () => {
 	console.log('Hello World');
@@ -19,7 +26,7 @@ gulp.task('default', () => {
 
 // remove the build directory
 gulp.task('clean', () => {
-	return gulp.src('build', {read:false})
+	return gulp.src(['build','doc'], {read:false})
 		.pipe(clean());
 });
 
@@ -31,9 +38,14 @@ gulp.task('lint', () => {
 		.pipe(eslint.failAfterError());
 });
 
+gulp.task('test', ['lint'], () => {
+	return gulp.src('spec/**/*.spec.js')
+		.pipe(mocha());
+});
+
 // build codes with babel and react
 // browserify client-side code
-gulp.task('build', ['clean', 'lint'], () => {
+gulp.task('build', ['lint'], () => {
 	gulp.src('src/**/*.js')
 		.pipe(babel())
 		.pipe(gulp.dest('build'));
@@ -47,9 +59,9 @@ gulp.task('build', ['clean', 'lint'], () => {
 		.pipe(gulp.dest('build'));
 });
 
-gulp.task('test', ['lint'], () => {
-	return gulp.src('spec.integration/**/*.spec.js')
-		.pipe(mocha());
+gulp.task('doc', ['build'], () => {
+	return gulp.src(['build/**/*.js', '!**/views', '!**/bundle.js', '!**/main.js'])
+		.pipe(jsdoc('doc'));
 });
 
 // run server
