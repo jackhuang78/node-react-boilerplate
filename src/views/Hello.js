@@ -17,6 +17,10 @@ class Hello extends React.Component {
 							<li>browserify</li>
 							<li>express</li>
 							<li>eslint</li>
+							<li>jsdoc</li>
+							<li>apidoc</li>
+							<li>mocha</li>
+							<li>chai, chai-as-promised</li>
 						</ul>
 						<li>react</li>
 						<li>bootstrap</li>

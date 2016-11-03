@@ -3,6 +3,8 @@ import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import {expect} from 'chai';
 import polyfill from 'babel-polyfill';
+import log4js from 'log4js';
+import path from 'path';
 
 /**
  * Create an Application. This instance can then be used to start as a service.
@@ -10,6 +12,8 @@ import polyfill from 'babel-polyfill';
  */
 class App {
 	constructor() {
+		let logger = log4js.getLogger(path.basename(__filename));
+
 		// Express instance
 		this.app = express();
 
@@ -25,6 +29,12 @@ class App {
 		// set view and view engine
 		this.app.set('views', 'src');
 		this.app.set('view engine', 'ejs');
+
+		// middleware to examine all requests
+		this.app.use((req, res, next) => {
+			logger.info(`${req.method} ${req.url}`);
+			next();
+		});
 
 
 		//==================
@@ -57,7 +67,8 @@ class App {
 	 */
 	async start(port) {
 		return new Promise((res, rej) => {
-			let server = this.app.listen(port, () => {
+			let server = this.app
+			.listen(port, () => {
 				this.server = server;
 				return res();
 			})

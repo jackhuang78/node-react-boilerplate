@@ -1,24 +1,37 @@
 //==============================
 //	Import required modules
 //==============================
-// the test driver
+// THE build tool
 import gulp from 'gulp';
 // transpiler for using es7 and react
 import babel from 'gulp-babel';
-import polyfill from 'babel-polyfill'; // to avoid 'ReferenceError: regeneratorRuntime is not defined' error
-import clean from 'gulp-clean';
+import babelify from 'babelify';
+import polyfill from 'babel-polyfill'; // need to include this in every class for es7
+// syntax and coding style
 import eslint from 'gulp-eslint';
-import nodemon from 'gulp-nodemon';
+// delete files 
+import clean from 'gulp-clean';
+// source browserify and minify
 import uglify from 'gulp-uglify';
 import browserify from 'browserify';
 import source from 'vinyl-source-stream';
 import buffer from 'vinyl-buffer';
-import babelify from 'babelify';
+// daemon
+import nodemon from 'gulp-nodemon';
+// test suite
 import mocha from 'gulp-mocha';
+// JS and REST documentation
 import jsdoc from 'gulp-jsdoc';
 import apidoc from 'gulp-api-doc';
+// logging
+import log4js from 'log4js';
+import path from 'path';
 
-//TODO: logger
+
+
+let logger = log4js.getLogger(path.basename(__filename));
+
+//TODO: logger, travis, readme, phantomjs
 
 gulp.task('default', () => {
 	console.log('Hello World');
@@ -27,28 +40,28 @@ gulp.task('default', () => {
 // remove the build directory
 gulp.task('clean', () => {
 	gulp.src(['build','doc'], {read:false})
-		.pipe(clean());
+			.pipe(clean());
 });
 
 // lint to check for syntax error / coding style
 gulp.task('lint', () => {
 	gulp.src(['src/**/*.js', 'spec*/**/*.js', './*.js'])
-		.pipe(eslint())
-		.pipe(eslint.format())
-		.pipe(eslint.failAfterError());
+			.pipe(eslint())
+			.pipe(eslint.format())
+			.pipe(eslint.failAfterError());
 });
 
 gulp.task('test', ['lint'], () => {
-	gulp.src('spec/**/*.spec.js')
-		.pipe(mocha());
+	gulp.src('spec/**/*.js')
+			.pipe(mocha());
 });
 
 // build codes with babel and react
 // browserify client-side code
 gulp.task('build', ['lint'], () => {
 	gulp.src('src/**/*.js')
-		.pipe(babel())
-		.pipe(gulp.dest('build'));
+			.pipe(babel())
+			.pipe(gulp.dest('build'));
 
 	browserify('./src/main.js')
 		.transform(babelify)
@@ -63,11 +76,11 @@ gulp.task('doc', ['build'], () => {
 	const serverCode = ['build/**/*.js', '!**/views', '!**/bundle.js', '!**/main.js'];
 	
 	gulp.src(serverCode)
-		.pipe(jsdoc('doc/js'));
+			.pipe(jsdoc('doc/js'));
 
 	gulp.src(serverCode)
-		.pipe(apidoc({markdown: false}))
-		.pipe(gulp.dest('doc/rest'));
+			.pipe(apidoc({markdown: false}))
+			.pipe(gulp.dest('doc/rest'));
 });
 
 // run server
@@ -77,6 +90,6 @@ gulp.task('run', () => {
 		script: 'build/run.js',
 		env: {PORT: 9999}
 	}).on('restart', () => {
-		console.log('app restarted');
+		logger.info('app restarted');
 	});
 });

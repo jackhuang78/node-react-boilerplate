@@ -16,6 +16,7 @@
     "ejs": "^2.5.2",
     "express": "^4.14.0",
     "jquery": "^3.1.1",
+    "log4js": "^0.6.38",
     "minimist": "^1.2.0",
     "needle": "^1.1.2",
     "react": "^15.3.2",
@@ -55,15 +56,30 @@
       "node": true
     },
     "rules": {
-      "quotes": [1, "single"],
-      "semi": [1, "always"],
-      "eol-last": [0],
-      "no-mixed-requires": [0],
-      "no-underscore-dangle": [0]
+      "quotes": [
+        1,
+        "single"
+      ],
+      "semi": [
+        1,
+        "always"
+      ],
+      "eol-last": [
+        0
+      ],
+      "no-mixed-requires": [
+        0
+      ],
+      "no-underscore-dangle": [
+        0
+      ]
     }
   },
   "babel": {
-    "presets": ["latest", "react"]
+    "presets": [
+      "latest",
+      "react"
+    ]
   },
   "apidoc": {}
 }
