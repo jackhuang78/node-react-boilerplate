@@ -1,29 +1,26 @@
 //==============================
 //	Import required modules
 //==============================
-// THE build tool
 import gulp from 'gulp';
-// transpiler for using es7 and react
+
 import babel from 'gulp-babel';
 import babelify from 'babelify';
-import polyfill from 'babel-polyfill'; // need to include this in every class for es7
-// syntax and coding style
-import eslint from 'gulp-eslint';
-// delete files 
+import polyfill from 'babel-polyfill';
+
 import clean from 'gulp-clean';
-// source browserify and minify
-import uglify from 'gulp-uglify';
+import eslint from 'gulp-eslint';
+import mocha from 'gulp-mocha';
+
 import browserify from 'browserify';
+import uglify from 'gulp-uglify';
 import source from 'vinyl-source-stream';
 import buffer from 'vinyl-buffer';
-// daemon
-import nodemon from 'gulp-nodemon';
-// test suite
-import mocha from 'gulp-mocha';
-// JS and REST documentation
+
 import jsdoc from 'gulp-jsdoc';
 import apidoc from 'gulp-api-doc';
-// logging
+
+import nodemon from 'gulp-nodemon';
+
 import log4js from 'log4js';
 import path from 'path';
 
@@ -51,6 +48,7 @@ gulp.task('lint', () => {
 			.pipe(eslint.failAfterError());
 });
 
+// syntax and coding style check
 gulp.task('test', ['lint'], () => {
 	gulp.src('spec/**/*.js')
 			.pipe(mocha());
