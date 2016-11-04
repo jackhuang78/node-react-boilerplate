@@ -1,7 +1,7 @@
 import chai, {expect,AssertionError} from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 import {get, post, put, delete} from 'needle';
-import App from '../src/App.js';
+import App from './src/App';
 
 // set chai plugins
 chai.use(chaiAsPromised);
