@@ -27,6 +27,7 @@ import path from 'path';
 
 
 let logger = log4js.getLogger(path.basename(__filename));
+logger.info(__filename);
 
 //TODO: logger, travis, readme, phantomjs
 
