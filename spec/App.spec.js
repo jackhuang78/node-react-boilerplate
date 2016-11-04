@@ -1,6 +1,7 @@
 import chai, {expect,AssertionError} from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 import {get, post, put, delete} from 'needle';
+import path from 'path';
 import log4js from 'log4js';
 let logger = log4js.getLogger(path.basename(__filename));
 logger.info(__filename);
