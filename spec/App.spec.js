@@ -3,8 +3,12 @@ import chaiAsPromised from 'chai-as-promised';
 import {get, post, put, delete} from 'needle';
 import path from 'path';
 import log4js from 'log4js';
+import ls from 'ls';
 let logger = log4js.getLogger(path.basename(__filename));
 logger.info(__filename);
+logger.info(ls('.'));
+logger.info(ls('..'));
+logger.info(ls('../src'));
 
 
 // import App from '../src/App';
