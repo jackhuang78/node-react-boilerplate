@@ -1,6 +1,11 @@
 import chai, {expect,AssertionError} from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 import {get, post, put, delete} from 'needle';
+
+let logger = log4js.getLogger(path.basename(__filename));
+logger.info(__filename);
+
+
 import App from '../src/App';
 
 // set chai plugins
