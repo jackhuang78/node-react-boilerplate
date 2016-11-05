@@ -4,37 +4,22 @@ A boilerplate for Node.js and React application development with the most common
 [![Build Status](https://travis-ci.org/jhuang78/node-react-boilerplate.svg?branch=master)](https://travis-ci.org/jhuang78/node-react-boilerplate)
 
 ## Components
-Markdown | Less | Pretty
---- 		| --- | ---
-*Still* | `renders` | **nicely**
-1 | 2 | 3
-
-
-### Engine
-Node.js
-### Package Management
-npm
-### Test
-mocha
-chai
-travis-ci
-### Syntax
-eslint
-### UI
-React
-browserify
-### Logging
-log4js
-### Documentation
-jsDoc
-ApiDoc
-### ES6/ES7/JSX Extension
-babel
-### Version Control
-git
-### Build Tool
-gulp
-### Application
-nodemon
+* Integreter: Node.js
+* Package management: npm
+* Build tool: gulp
+* ES6/ES7/JSX transpiler: babel
+* Testing framework: mocha
+* Assertion library: chai
+* Continuous integeration: travis-ci
+* Lint: ESLint
+* Logging: log4js
+* Javascript Documentation: jsDoc
+* REST Documentation: ApiDoc
+* Readme: Markdown
+* Bundler: browserify
+* UI Components: React
+* UI Styling: Bootstrap
+* Version Control: git
+* Application Daemon: nodemon
 
 
