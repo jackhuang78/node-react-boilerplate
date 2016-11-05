@@ -92,3 +92,7 @@ gulp.task('run', () => {
 		logger.info('app restarted');
 	});
 });
+
+gulp.task('default', ['test'], () => {
+	console.log('hello');
+});

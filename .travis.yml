@@ -9,4 +9,4 @@ env:
   - CXX=g++-4.8
 before_script:
   - npm install -g gulp
-script: NODE_PATH=. gulp test
+script: NODE_PATH=. gulp
