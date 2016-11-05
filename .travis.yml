@@ -11,4 +11,4 @@ before_script:
   - npm install -g gulp
   - ls
   - ls src
-script: NODE_PATH=. gulp
+script: NODE_PATH=. gulp spec

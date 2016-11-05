@@ -4,7 +4,6 @@ import cookieParser from 'cookie-parser';
 import {expect} from 'chai';
 import polyfill from 'babel-polyfill';
 import log4js from 'log4js';
-import path from 'path';
 
 /**
  * Create an Application. This instance can then be used to start as a service.
@@ -12,7 +11,7 @@ import path from 'path';
  */
 class App {
 	constructor() {
-		let logger = log4js.getLogger(path.basename(__filename));
+		let logger = log4js.getLogger(App.name);
 
 		// Express instance
 		this.app = express();

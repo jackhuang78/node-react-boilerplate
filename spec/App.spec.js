@@ -3,15 +3,21 @@ import chaiAsPromised from 'chai-as-promised';
 import {get, post, put, delete} from 'needle';
 import App from 'src/App.js';
 
+//
 // set chai plugins
+// 
 chai.use(chaiAsPromised);
 
-
-
+//
+// Test cases starts here
+//
 describe('App', () => {
 	const PORT = 8888;
 	const URL = `localhost:${PORT}`;
 
+	//
+	// Javascript API
+	// 
 	describe('JS', () => {
 		describe('#start and #stop', () => {
 			it('Can be started then stopped.', async () => {
@@ -41,7 +47,9 @@ describe('App', () => {
 		});
 	});
 
-
+	//
+	// REST API
+	// 
 	describe('REST', () => {
 		let app;
 

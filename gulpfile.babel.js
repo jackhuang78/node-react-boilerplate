@@ -24,12 +24,8 @@ import nodemon from 'gulp-nodemon';
 import log4js from 'log4js';
 import path from 'path';
 
-
-
-let logger = log4js.getLogger(path.basename(__filename));
-logger.info(__filename);
-
-//TODO: logger, travis, readme, phantomjs
+process.env['NODE_PATH'] = '.';
+//TODO: readme, phantomjs
 
 gulp.task('default', () => {
 	console.log('Hello World');
@@ -50,8 +46,13 @@ gulp.task('lint', () => {
 });
 
 // syntax and coding style check
-gulp.task('test', ['lint'], () => {
+gulp.task('spec', ['lint'], () => {
 	gulp.src('spec/**/*.js')
+			.pipe(mocha());
+});
+
+gulp.task('test', () => {
+	gulp.src('test.js')
 			.pipe(mocha());
 });
 
@@ -91,8 +92,4 @@ gulp.task('run', () => {
 	}).on('restart', () => {
 		logger.info('app restarted');
 	});
-});
-
-gulp.task('default', ['test'], () => {
-	console.log('hello');
 });
