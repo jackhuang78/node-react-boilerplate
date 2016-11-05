@@ -21,10 +21,8 @@ import apidoc from 'gulp-api-doc';
 
 import nodemon from 'gulp-nodemon';
 
-import log4js from 'log4js';
-import path from 'path';
+import {argv} from 'yargs';
 
-process.env['NODE_PATH'] = '.';
 //TODO: readme, phantomjs
 
 gulp.task('default', () => {
@@ -47,7 +45,7 @@ gulp.task('lint', () => {
 
 // syntax and coding style check
 gulp.task('spec', ['lint'], () => {
-	gulp.src('spec/**/*.js')
+	gulp.src(argv.glob ? argv.glob : 'spec/**/*.js')
 			.pipe(mocha());
 });
 
