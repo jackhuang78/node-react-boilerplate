@@ -23,7 +23,9 @@ import nodemon from 'gulp-nodemon';
 
 import {argv} from 'yargs';
 
-//TODO: readme, phantomjs
+//TODO: phantomjs
+
+
 
 gulp.task('default', () => {
 	console.log('Hello World');
@@ -45,7 +47,8 @@ gulp.task('lint', () => {
 
 // syntax and coding style check
 gulp.task('spec', ['lint'], () => {
-	gulp.src(argv.glob ? argv.glob : 'spec/**/*.js')
+	console.log(argv);
+	gulp.src(argv.glob ? `spec/**/*${argv.glob}*` : 'spec/**/*.js')
 			.pipe(mocha());
 });
 

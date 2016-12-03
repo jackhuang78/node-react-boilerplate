@@ -1,19 +1,21 @@
-import chai, {expect,AssertionError} from 'chai';
-import chaiAsPromised from 'chai-as-promised';
-import {get, post, put, delete} from 'needle';
+import chai, {expect, AssertionError} from 'chai';
+//import chaiAsPromised from 'chai-as-promised';
+import request from 'request-promise-native';
 import App from 'src/App.js';
+import util from 'util';
 
 //
 // set chai plugins
 // 
-chai.use(chaiAsPromised);
+//chai.use(chaiAsPromised);
 
 //
 // Test cases starts here
 //
 describe('App', () => {
-	const PORT = 8888;
-	const URL = `localhost:${PORT}`;
+	const HOST = 'localhost';
+	const PORT = 8888;	
+	const URL = `http://${HOST}:${PORT}`;
 
 	//
 	// Javascript API
@@ -34,14 +36,14 @@ describe('App', () => {
 				await app.stop();
 			});
 
-			it('Cannot be start service again before stopping it.', async () => {
+			it('Cannot start service again before stopping it.', async () => {
 				let app = new App();
 				await app.start(PORT);
 				expect(app.start(PORT)).to.be.rejected;
 				await app.stop();
 			});
 
-			it('Cannot stopped service before starting it.', async () => {
+			it('Cannot stop service before starting it.', async () => {
 				expect(new App().stop()).to.be.rejected;
 			});
 		});
@@ -63,12 +65,24 @@ describe('App', () => {
 		});
 
 		describe('GET /', () => {
-			it('Should response with \'Hello World!\'.', () => {
-				get(URL, (err, resp) => {
-					expect(resp.statusCode).to.equal(200);
-					expect(resp.body).to.equal('Hello World!');
-				});
+			it('Should response with \'Hello World!\'.', async () => {
+				let resp = await request.get(URL, {resolveWithFullResponse: true});
+				expect(resp.statusCode).to.equal(200);
+				expect(resp.body).to.equal('Hello World!');
 			});
 		});
+
+		describe('GET /404NotFound', () => {
+			it('Should failed with 404 Not Found', async () => {
+				try {
+					await request.get(`http://${HOST}:${PORT}/404NotFound`);
+					expect.failed();
+				} catch(e) {
+					expect(e.statusCode).to.equal(404);
+				}
+			});
+		});
+
+
 	});
 });
